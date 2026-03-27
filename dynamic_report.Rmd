@@ -1,0 +1,97 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #0F0F0F;
+  background-color: #FDF9E4;
+  padding: 10px 20px;
+}
+
+h2 {
+  color: #000F0F;
+  border-bottom: 2px solid #004d99;
+  padding-bottom: 5px;
+  margin-top: 20px;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+
+
+```
+
+## The Current State of Transportation
+
+This report analyses observational data collected on transport and travels taken by people. Each observation represents a single trip and keeps track of the method of transport, distance of each trip, cost and the reason behind the trip.
+
+The aim of this analysis is to identify patterns in transport behaviour, such as the most common methods of transportation, the most likely reason for travel and the average cost and distance of travel.
+
+<img src="https://media.istockphoto.com/id/1535913828/photo/auckland-city-traffic.jpg?s=612x612&w=0&k=20&c=-Mv9A7lGlXvH3hmJ8wYsNANgO_jt6IXViiP8WdBDz9s=" width="61.5%">
+
+```{r}
+library(tidyverse)
+
+# Reading into the csv file for data analysis
+logged_data <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQtWz5lmb-HxyXMJk6Rk5OEOF4ObrSsmcDSVuhomyOZPnWNj9luvDXyfcexcc_41OXA7sTq1X404DXd/pub?output=csv")
+
+
+# Renaming columns for more concise variable names
+latest_data <- logged_data %>%
+  rename(transport = "What.method.of.transport.was.used.in.this.observed.trip.",
+         cost = "What.was.the.estimated.cost.of.this.trip..in.NZD..",
+         distance = "Approximately.how.far.was.this.trip..in.km..",
+         purpose = "What.was.the.main.purpose.of.this.trip.")
+
+
+# Renaming categorical data names for better formatting
+latest_data <- latest_data %>%
+  mutate(transport = recode(transport,
+                            "Public Transport (Bus, Train, Ferry)" = "Public Transport")) %>%
+  mutate(purpose = recode(purpose, "Leisure/Exercise" = "Leisure", "Education (School, University)" = "Education"))
+  
+  # Calculating numeric values for report
+  mean_cost <- mean(latest_data$cost, na.rm = TRUE)
+  mean_distance <- mean(latest_data$distance, na.rm = TRUE)
+  
+  # Graphing the bar charts for report
+  ggplot(latest_data) +
+    geom_bar(aes(x = transport, fill = transport)) +
+    labs(title = "Main Method of Transport",
+         subtitle = "Determining the common mode of transport used \n when travelling based on observational survey data",
+         x = "Method of Transport",
+         y = "Number of Trips")
+  
+  ggplot(latest_data) +
+    geom_bar(aes(y = purpose, fill = purpose)) +
+    labs(title = "Main Purpose of Travel",
+         subtitle = "Determining the common reason of travel \n based on data from observational survey",
+         x = "Number of Trips",
+         y = "Purpose of Travel")
+
+```
+
+From the data, the average cost of travel was `r round(mean_cost, 2)` NZD and the average distance travelled was `r round(mean_distance, 2)` km. This data alone suggests that most trips tend to be relatively short and low-cost.
+
+Based on the bar charts, most trips tend to be taken by car, followed by public transport, and the most likely reason for travelling is for work reasons, with the second most likely reason being for education reasons, such as travelling to and from university. This information provides more context for the summary statistics, indicating that most trips are just commuting to and from work or university, with any abnormally long trips being offset by biking and walking trips, which are shorter and free to take.
