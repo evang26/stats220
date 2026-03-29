@@ -20,6 +20,6 @@ A meme that captures how I currently feel about my university studies is:
 2. **Bold text**
 3. ***Bold and italic text***
 
-<a href = "https://www.youtube.com/watch?v=QDia3e12czc"> This is a link to a different website. </a>
+[This is a link to a different website.](https://www.youtube.com/watch?v=QDia3e12czc)
 
 ![](https://media1.tenor.com/m/yheo1GGu3FwAAAAd/rick-roll-rick-ashley.gif)
