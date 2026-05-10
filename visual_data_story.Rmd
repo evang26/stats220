@@ -1,0 +1,108 @@
+---
+title: Exploring the Nature of Travel
+output: html_document
+---
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+```
+
+```{js}
+$(function() {
+  $(".level2").css('visibility', 'hidden');
+  $(".level2").first().css('visibility', 'visible');
+  $(".container-fluid").height($(".container-fluid").height() + 300);
+  $(window).on('scroll', function() {
+    $('h2').each(function() {
+      var h2Top = $(this).offset().top - $(window).scrollTop();
+      var windowHeight = $(window).height();
+      if (h2Top >= 0 && h2Top <= windowHeight / 2) {
+        $(this).parent('div').css('visibility', 'visible');
+      } else if (h2Top > windowHeight / 2) {
+        $(this).parent('div').css('visibility', 'hidden');
+      }
+    });
+  });
+})
+```
+
+```{css echo=FALSE}
+body {
+  background-color: #f8f4ec;
+  color: #3b3b3b;
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.8;
+  padding-bottom: 100px;
+}
+
+h1 {
+  text-align: center;
+  color: #5B7C99;
+  font-size: 42px;
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: #4F8A8B;
+  border-left: 6px solid #D08C60;
+  padding-left: 12px;
+  margin-top: 70px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 17px;
+}
+
+img {
+  border-radius: 12px;
+  border: 3px solid #d8d2c4;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+  margin-top: 15px;
+  margin-bottom: 25px;
+  max-width: 100%;
+}
+
+.figcaption {display: none}
+```
+
+## The nature of my data
+This data collects information on trips taken by me, my family and my friends, including information on the reason behind each trip, the price and distance of the trip and the method of travelling on the trip. The purpose of this data is to analyze what each transport method is used for, whether it be long distance travel, travelling to and from school or work, or short simple travelling for shopping or exercise.
+
+## How transport use and travel purpose varies over the week
+
+![Bar chart showcasing transport usage over each day of the week, separated by the purpose of travel.](plot1.png)
+
+
+This graph shows that there is variance in transport usage depending on the day of the week, with most observations being recorded on Wednesdays and car travelling being the most common transport method recorded. Cars are commonly used in work travel compared to other transport methods. There is the possibility that some data was observed on different days and recorded on later days, so the data may not perfectly represent the timing of the travels.
+
+## Comparing the mean distances travelled for each type of transport
+
+The second graph shows that cars have a substantially larger mean travel distance compared to other transport methods at a mean distance of approximately 60km. Walking has a much smaller mean travel distance with a mean of approximately 6km. Biking and public transport have very similar mean travel distances, differing by only a few kilometers, which may suggest that they are used for similar travel journeys within this dataset.
+
+
+
+![Bar chart showcasing mean distance travelled with each transport type.](plot2.png)
+
+
+## Investigating the relationship between distance and cost for each method of transport
+
+![Scatter Graph showcasing the relationships between distance and cost for different types of transport, with points coloured based on transport type and a trend line showing the overall relationship for each transport type.](plot3.png)
+
+
+From the third plot, both biking and walking do not increase in cost and remain at $0 as the travel distance increases. For public transport and car travel, there is a roughly positive relationship between the cost of travel and the travel distance, with cost increasing as the distance increases. Car travel has a much more pronounced relationship as the cost of travelling increases at a higher rate as the travel distance increases. There may have been some estimation of the price of travelling when recording the data, which could contribute to inconsistencies in the findings of the data.
+
+
+## What the data tells us
+
+From the three graphs, car travel appears to be more likely used for long distance travel than other transport methods. A reason car travel may be more preferable to use for long distance travelling could be because of the increased flexibility it has compared to public transport in terms of travelling within towns. From the public transport map of Auckland below, public transport is used as a bridge between towns, rather than transport within those towns, with routes being straight line connections between towns. This may make it more preferable to use car travel if travelling to a certain location within a different town. Cycling and walking are also the most commonly used for short distance travelling and leisure/exercise. This is likely due to both being more physically demanding, making the travel good for exercise, but not ideal for long distance travelling.
+
+
+
+![Auckland public transport map that showcases straight line connections between towns and limited public transport routes within each individual town.](at_map.png)
+
+Image Source: Auckland Transport. (2025). Network maps. https://at.govt.nz/bus-train-ferry/at-mobile-app/network-maps 
+
+
